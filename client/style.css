@@ -1,3 +1,38 @@
+* {
+    font-family: helvetica;
+}
+
 body {
     background-color: ghostwhite;
+}
+
+input {
+    margin: 3px;
+}
+
+.largeLogoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logoLarge {
+    object-fit: cover;
+    height: 200px;
+}
+
+.logoSmall {
+    object-fit: cover;
+    height: 50px;
+}
+
+.registerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.registrationTitle {
+    font-family: helvetica;
+    font-weight: 200;
 }

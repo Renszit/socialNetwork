@@ -5,7 +5,13 @@ import Registration from "./registration";
 export default function Welcome() {
     return (
         <div>
-            <h1>Welcome to social network!</h1>
+            <div className="largeLogoContainer">
+                <img
+                    className="logoLarge"
+                    src="Surrealism_logo_large.svg"
+                ></img>
+                <p>community for the unconcious mind</p>
+            </div>
             <Registration />
         </div>
     );

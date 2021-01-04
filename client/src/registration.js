@@ -34,8 +34,8 @@ export default class Registration extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Registration</h1>
+            <div className="registerContainer">
+                <h1 className="registrationTitle">Registration</h1>
                 {this.state.error && <p>something went wrong! :O</p>}
                 <input
                     onChange={(e) => this.handleChange(e)}

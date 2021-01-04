@@ -5,7 +5,7 @@ let elem;
 if (location.pathname === "/welcome") {
     elem = <Welcome />;
 } else {
-    elem = <h1>welcome</h1>;
+    elem = <img className="logoSmall" src="Surrealism_logo_smol.svg"></img>;
 }
 
 ReactDOM.render(elem, document.querySelector("main"));

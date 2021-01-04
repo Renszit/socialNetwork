@@ -36,3 +36,7 @@ input {
     font-family: helvetica;
     font-weight: 200;
 }
+
+.error {
+    color: red;
+}

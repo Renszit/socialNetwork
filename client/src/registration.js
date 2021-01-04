@@ -4,9 +4,7 @@ import axios from "axios";
 export default class Registration extends Component {
     constructor() {
         super();
-        this.state = {
-            error: false,
-        };
+        this.state = {};
     }
 
     handleChange(e) {
@@ -22,10 +20,16 @@ export default class Registration extends Component {
         console.log("click", this.state);
         axios
             .post("/registration", this.state)
-            .then(() => {
-                location.replace("/");
+            .then((res) => {
+                console.log("response:", res);
+                if (res.data.error) {
+                    this.setState({ error: true });
+                } else {
+                    location.replace("/");
+                }
             })
-            .catch(() => {
+            .catch((err) => {
+                console.log("handleclick error:", err);
                 this.setState({
                     error: true,
                 });
@@ -36,7 +40,9 @@ export default class Registration extends Component {
         return (
             <div className="registerContainer">
                 <h1 className="registrationTitle">Registration</h1>
-                {this.state.error && <p>something went wrong! :O</p>}
+                {this.state.error && (
+                    <p className="error">something went wrong! :O</p>
+                )}
                 <input
                     onChange={(e) => this.handleChange(e)}
                     name="first"

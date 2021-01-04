@@ -25,17 +25,25 @@ app.use(
 
 app.post("/registration", (req, res) => {
     const { first, last, email, password } = req.body;
-    hash(password).then((hash) => {
-        db.addRegister(first, last, email, hash)
-            .then(({ rows }) => {
-                req.session.userId = rows[0].id;
-                res.json("/");
-            })
-            .catch((err) => {
-                res.redirect("/welcome");
-                console.log("error in registration", err);
-            });
-    });
+    hash(password)
+        .then((hash) => {
+            db.addRegister(first, last, email, hash)
+                .then(({ rows }) => {
+                    req.session.userId = rows[0].id;
+                    // res.redirect("/");
+                    res.json("/");
+                })
+                .catch((err) => {
+                    // res.redirect("/registration");
+                    res.json({ error: true });
+                    console.log("error in registratioooon", err);
+                });
+        })
+        .catch((err) => {
+            // res.redirect("/registration");
+            res.json({ error: true });
+            console.log("error in registration", err);
+        });
 });
 
 app.get("/welcome", (req, res) => {

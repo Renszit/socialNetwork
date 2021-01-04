@@ -5,7 +5,7 @@ let elem;
 if (location.pathname === "/welcome") {
     elem = <Welcome />;
 } else {
-    elem = <p>Home page!!</p>;
+    elem = <h1>welcome</h1>;
 }
 
 ReactDOM.render(elem, document.querySelector("main"));

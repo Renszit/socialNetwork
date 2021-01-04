@@ -3,6 +3,8 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
+const db = require("./db");
+const { hash } = require("./bc");
 
 app.use(
     express.json({
@@ -20,6 +22,21 @@ app.use(
         maxAge: 1000 * 60 * 60 * 24 * 7 * 6,
     })
 );
+
+app.post("/registration", (req, res) => {
+    const { first, last, email, password } = req.body;
+    hash(password).then((hash) => {
+        db.addRegister(first, last, email, hash)
+            .then(({ rows }) => {
+                req.session.userId = rows[0].id;
+                res.json("/");
+            })
+            .catch((err) => {
+                res.redirect("/welcome");
+                console.log("error in registration", err);
+            });
+    });
+});
 
 app.get("/welcome", (req, res) => {
     if (req.session.userId) {

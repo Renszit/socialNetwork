@@ -1,5 +1,5 @@
 // function component
-import React from "react";
+// import React from "react";
 import Registration from "./registration";
 
 export default function Welcome() {

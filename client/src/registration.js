@@ -4,7 +4,9 @@ import axios from "axios";
 export default class Registration extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            error: false,
+        };
     }
 
     handleChange(e) {
@@ -17,7 +19,7 @@ export default class Registration extends Component {
     }
 
     handleClick() {
-        console.log("click");
+        console.log("click", this.state);
         axios
             .post("/registration", this.state)
             .then(() => {

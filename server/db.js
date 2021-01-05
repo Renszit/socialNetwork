@@ -21,20 +21,25 @@ module.exports.addSecretCode = (email, code) => {
     const q = `INSERT INTO reset_codes(email,code) 
     VALUES ($1, $2)
     RETURNING id `;
-    const param = [email,code];
+    const param = [email, code];
     return db.query(q, param);
 };
 
 module.exports.checkIfEmailExists = (email) => {
     const q = `SELECT * FROM users WHERE email = ($1)`;
     const param = [email];
-    return db.query(q,param);
+    return db.query(q, param);
 };
 
-module.exports.checkIfCodeIsCorrect = (code) => {
+module.exports.checkIfCodeIsCorrect = (email, code) => {
     const q = `SELECT * FROM reset_codes
-    WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes', 
-    WHERE code = ($1)`;
-    const param = [code];
-    return db.query(q,param);
-}
+    WHERE CURRENT_TIMESTAMP - timestamp < INTERVAL '10 minutes' AND email = ($1) AND code = ($2)`;
+    const param = [email, code];
+    return db.query(q, param);
+};
+
+module.exports.updatePassword = (pass, email) => {
+    const q = `UPDATE users SET pass= ($1) WHERE email=($2)`;
+    const param = [pass, email];
+    return db.query(q, param);
+};

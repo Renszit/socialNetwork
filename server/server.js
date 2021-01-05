@@ -77,16 +77,16 @@ app.post("/login", (req, res) => {
         });
 });
 
-const secretCode = cryptoRandomString({
-    length: 6,
-});
-
 app.post("/password/reset/start", (req, res) => {
     const { email } = req.body;
+    const secretCode = cryptoRandomString({
+        length: 6,
+    });
     db.checkIfEmailExists(email)
         .then(() => {
             db.addSecretCode(email, secretCode)
                 .then(() => {
+                    // console.log("result of pw reset:", result);
                     sendEmail(
                         "renspennings@gmail.com",
                         secretCode,
@@ -106,21 +106,17 @@ app.post("/password/reset/start", (req, res) => {
 });
 
 app.post("/password/reset/verify", (req, res) => {
-    const { code, password } = req.body;
-    db.checkIfCodeIsCorrect(code).then(()=> {
-
-    });
-    //post /password/reset/verify
-    // when user enters code and clicks "submit"
-    // make sure the code the user enters matches the code we have stored in db
-    // - make sure user entered the right code
-    // - make sure the code is not expired
-    // - i.e. more than 10 minutes old = expired
-    // - Special SELECT query in class notes that has to be modified a little
-    // then reset password
-    // else render error message
-    // hash password using the same hash function we used in registration route
-    // UPDATE user's pass in the users table
+    const { code, password, email } = req.body;
+    db.checkIfCodeIsCorrect(email, code)
+        .then(() => {
+            hash(password)
+                .then((hashedpass) => db.updatePassword(hashedpass, email))
+                .then(() => res.json({ view: 3 }));
+        })
+        .catch(() => {
+            res.json({ error: true });
+            // console.log("error in verify:", err);
+        });
 });
 
 app.get("/welcome", (req, res) => {

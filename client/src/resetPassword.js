@@ -3,7 +3,6 @@ import { Component } from "react";
 import axios from "./axios";
 import { Link } from "react-router-dom";
 
-
 export default class ResetPassword extends Component {
     constructor() {
         super();
@@ -83,6 +82,13 @@ export default class ResetPassword extends Component {
                     {this.state.error && (
                         <p className="error">something went wrong! :O</p>
                     )}
+                    <input
+                        className="hidden"
+                        onChange={(e) => this.handleChange(e)}
+                        name="email"
+                        placeholder="email"
+                        type="text"
+                    />
                     <input
                         onChange={(e) => this.handleChange(e)}
                         name="code"

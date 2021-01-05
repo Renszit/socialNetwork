@@ -40,17 +40,14 @@ app.post("/registration", (req, res) => {
             db.addRegister(first, last, email, hash)
                 .then(({ rows }) => {
                     req.session.userId = rows[0].id;
-                    // res.redirect("/");
                     res.json("/");
                 })
                 .catch((err) => {
-                    // res.redirect("/registration");
                     res.json({ error: true });
                     console.log("error in registratioooon", err);
                 });
         })
         .catch((err) => {
-            // res.redirect("/registration");
             res.json({ error: true });
             console.log("error in registration", err);
         });
@@ -63,7 +60,7 @@ app.post("/login", (req, res) => {
             console.log("result rows:", rows);
             const { pass: hash, id: userId } = rows[0];
             compare(password, hash).then((result) => {
-                console.log("login post result:" ,result);
+                // console.log("login post result:" ,result);
                 if (result) {
                     req.session.userId = userId;
                     res.json("/");

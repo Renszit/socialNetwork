@@ -13,7 +13,7 @@ export default function Welcome() {
                     className="logoLarge"
                     src="Surrealism_logo_large.svg"
                 ></img>
-                <p>community for the unconcious mind</p>
+                <p className="pTags">community for a future unreality</p>
             </div>
             <HashRouter>
                 <div>

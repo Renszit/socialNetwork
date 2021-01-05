@@ -62,6 +62,7 @@ export default class ResetPassword extends Component {
         if (this.state.view == 1) {
             return (
                 <div className="registerContainer">
+                    <h1 className="registrationTitle">reset password</h1>
                     {this.state.error && (
                         <p className="error">something went wrong! :O</p>
                     )}
@@ -79,9 +80,13 @@ export default class ResetPassword extends Component {
         } else if (this.state.view == 2) {
             return (
                 <div className="registerContainer">
+                    <h1 className="registrationTitle">
+                        enter code and new password
+                    </h1>
                     {this.state.error && (
                         <p className="error">something went wrong! :O</p>
                     )}
+
                     <input
                         className="hidden"
                         onChange={(e) => this.handleChange(e)}
@@ -106,9 +111,11 @@ export default class ResetPassword extends Component {
             );
         } else if (this.state.view == 3) {
             return (
-                <div>
-                    <h1>Password changed!</h1>
-                    <Link to="/login">Click here to log in</Link>
+                <div className="registerContainer">
+                    <h1 className="registrationTitle">Password changed!</h1>
+                    <Link className="linkTags" to="/login">
+                        Click here to log in
+                    </Link>
                 </div>
             );
         }

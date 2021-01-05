@@ -1,9 +1,9 @@
 * {
-    font-family: helvetica;
+    font-family: "IBM Plex Mono";
 }
 
 body {
-    background-color: ghostwhite;
+    background-color: #96c3ce;
 }
 
 input {
@@ -18,7 +18,7 @@ input {
 
 .logoLarge {
     object-fit: cover;
-    width: 50%;
+    width: 40%;
 }
 
 .logoSmall {
@@ -33,15 +33,33 @@ input {
 }
 
 .registrationTitle {
-    font-family: helvetica;
-    font-weight: 200;
+    font-weight: 300;
+    font-size: 20px;
 }
 
 .error {
-    color: red;
-    font-size: 12px;
+    color:#F26430;
+    font-size: 15px;
+    font-weight: 300;
 }
 
 .hidden {
     display: none;
+}
+
+.pTags {
+    font-family: "Special Elite";
+    color: #a79ab2;
+    font-size: 30px;
+}
+
+.linkTags {
+    margin: 2px;
+    font-size: 15px;
+    text-decoration: none;
+}   
+
+.linkTags:visited {
+    text-decoration: none;
+    color: #F4EEA9;
 }

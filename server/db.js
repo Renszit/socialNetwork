@@ -10,3 +10,9 @@ module.exports.addRegister = (first, last, email, pass) => {
     const param = [first, last, email, pass];
     return db.query(r, param);
 };
+
+module.exports.getHashAndEmail = (email) => {
+    const k = "SELECT pass, id FROM users WHERE email = ($1)";
+    const params = [email];
+    return db.query(k, params);
+};

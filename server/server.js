@@ -5,6 +5,8 @@ const path = require("path");
 const cookieSession = require("cookie-session");
 const db = require("./db");
 const { hash } = require("./bc");
+const { compare } = require("./bc");
+const csurf = require("csurf");
 
 app.use(
     express.json({
@@ -22,6 +24,14 @@ app.use(
         maxAge: 1000 * 60 * 60 * 24 * 7 * 6,
     })
 );
+
+app.use(csurf());
+
+app.use(function (req, res, next) {
+    console.log("token", req.csrfToken());
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
 
 app.post("/registration", (req, res) => {
     const { first, last, email, password } = req.body;
@@ -43,6 +53,28 @@ app.post("/registration", (req, res) => {
             // res.redirect("/registration");
             res.json({ error: true });
             console.log("error in registration", err);
+        });
+});
+
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+    db.getHashAndEmail(email)
+        .then(({ rows }) => {
+            console.log("result rows:", rows);
+            const { pass: hash, id: userId } = rows[0];
+            compare(password, hash).then((result) => {
+                console.log("login post result:" ,result);
+                if (result) {
+                    req.session.userId = userId;
+                    res.json("/");
+                } else {
+                    res.json({ error: true });
+                }
+            });
+        })
+        .catch((err) => {
+            console.log("error in login", err);
+            res.json({ error: true });
         });
 });
 

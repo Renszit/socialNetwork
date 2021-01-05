@@ -1,6 +1,8 @@
 // function component
 // import React from "react";
+import { HashRouter, Route } from "react-router-dom";
 import Registration from "./registration";
+import Login from "./login";
 
 export default function Welcome() {
     return (
@@ -12,7 +14,12 @@ export default function Welcome() {
                 ></img>
                 <p>community for the unconcious mind</p>
             </div>
-            <Registration />
+            <HashRouter>
+                <div>
+                    <Route exact path="/" component={Registration} />
+                    <Route path="/login" component={Login} />
+                </div>
+            </HashRouter>
         </div>
     );
 }

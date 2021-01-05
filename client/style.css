@@ -18,7 +18,7 @@ input {
 
 .logoLarge {
     object-fit: cover;
-    height: 200px;
+    width: 50%;
 }
 
 .logoSmall {

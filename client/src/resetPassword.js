@@ -30,7 +30,7 @@ export default class ResetPassword extends Component {
                     if (res.data.error) {
                         this.setState({ error: true });
                     } else {
-                        this.setState({ view: 2 });
+                        this.setState({ view: 2, error: false });
                     }
                 })
                 .catch(() => {
@@ -46,7 +46,7 @@ export default class ResetPassword extends Component {
                     if (res.data.error) {
                         this.setState({ error: true });
                     } else {
-                        this.setState({ view: 3 });
+                        this.setState({ view: 3, error: false });
                     }
                 })
                 .catch(() => {

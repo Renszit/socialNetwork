@@ -70,6 +70,7 @@ export default class Registration extends Component {
                 />
                 <button onClick={() => this.handleClick()}>submit</button>
                 <Link to="/login">Click here to log in</Link>
+                <Link to="/resetpassword">Forgot password?</Link>
             </div>
         );
     }

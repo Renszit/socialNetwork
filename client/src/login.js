@@ -58,6 +58,7 @@ export default class Login extends Component {
                 />
                 <button onClick={() => this.handleClick()}>submit</button>
                 <Link to="/">Click here to register</Link>
+                <Link to="/resetpassword">Forgot password?</Link>
             </div>
         );
     }

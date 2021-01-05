@@ -16,3 +16,25 @@ module.exports.getHashAndEmail = (email) => {
     const params = [email];
     return db.query(k, params);
 };
+
+module.exports.addSecretCode = (email, code) => {
+    const q = `INSERT INTO reset_codes(email,code) 
+    VALUES ($1, $2)
+    RETURNING id `;
+    const param = [email,code];
+    return db.query(q, param);
+};
+
+module.exports.checkIfEmailExists = (email) => {
+    const q = `SELECT * FROM users WHERE email = ($1)`;
+    const param = [email];
+    return db.query(q,param);
+};
+
+module.exports.checkIfCodeIsCorrect = (code) => {
+    const q = `SELECT * FROM reset_codes
+    WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes', 
+    WHERE code = ($1)`;
+    const param = [code];
+    return db.query(q,param);
+}

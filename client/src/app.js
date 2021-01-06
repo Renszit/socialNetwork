@@ -11,6 +11,7 @@
 // passes the data (props) to every child component that might need it
 // toggle the modal (for uploading)
 
+import axios from "./axios";
 import { Component } from "react";
 import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
@@ -25,10 +26,13 @@ export default class App extends Component {
 
     componentDidMount() {
         console.log("app mounted!");
-        // use axios to make request to server
-        // the server will have to retrieve info about user
-        // info we need: everything except the password
-        // once we get a response from axios, store data in state of app
+        axios
+            .get("/profile")
+            .then((res) => {
+                console.log("response profile get route:", res.data);
+                this.setState(res.data);
+            })
+            .catch((err) => console.log("error in profile axios", err));
     }
 
     toggleUploader() {
@@ -37,11 +41,11 @@ export default class App extends Component {
             uploaderVisible: !this.state.uploaderVisible,
         });
     }
-    //you can call these functions from other components (uploader, profilepic)
+
     setImage(newProfilePic) {
         console.log("newProfilepic:", newProfilePic);
         this.setState({
-            url: "whatever the new profile pic is",
+            url: newProfilePic,
         });
     }
 

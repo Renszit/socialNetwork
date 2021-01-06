@@ -11,7 +11,7 @@ export default function ProfilePic(props) {
             <h1>
                 Welcome {first} {last}!
             </h1>
-            <img src={url}></img>
+            <img className="profileImg" src={url}></img>
         </div>
     );
 }

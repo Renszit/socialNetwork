@@ -4,11 +4,35 @@ const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
 const db = require("./db");
-const { hash } = require("./bc");
-const { compare } = require("./bc");
+const { hash, compare } = require("./bc");
 const csurf = require("csurf");
 const cryptoRandomString = require("crypto-random-string");
 const { sendEmail } = require("./ses");
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const s3 = require("./s3");
+const { s3Url } = require("./config");
+
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: (req, file, callback) => {
+        uidSafe(24)
+            .then((uid) => {
+                callback(null, `${uid}${path.extname(file.originalname)}`);
+            })
+            .catch((err) => callback(err));
+    },
+});
+
+const uploader = multer({
+    storage,
+    limits: {
+        // Set a file size limit to prevent users from uploading huge files and to protect against DOS attacks
+        fileSize: 2097152,
+    },
+});
 
 app.use(
     express.json({
@@ -17,8 +41,6 @@ app.use(
 );
 
 app.use(compression());
-
-app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.use(
     cookieSession({
@@ -34,6 +56,8 @@ app.use(function (req, res, next) {
     res.cookie("mytoken", req.csrfToken());
     next();
 });
+
+app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.post("/registration", (req, res) => {
     const { first, last, email, password } = req.body;
@@ -124,6 +148,45 @@ app.get("/welcome", (req, res) => {
         res.redirect("/");
     } else {
         res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+    }
+});
+
+app.get("/profile", (req, res) => {
+    const id = req.session.userId;
+    db.getProfile(id)
+        .then(({ rows }) => {
+            const { first, last, email, created_at, url } = rows[0];
+            res.json({
+                id: id,
+                first: first,
+                last: last,
+                email: email,
+                createdAt: created_at,
+                url: url,
+            });
+        })
+        .catch((err) => {
+            console.error("error in profile get ", err);
+            res.json({ error: true });
+        });
+});
+
+app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {
+    if (req.file) {
+        console.log(req.file.filename);
+        const image = `${s3Url}${req.file.filename}`;
+        db.putImage(req.session.userId, image)
+            .then(
+                () => {
+                    res.json({ url: image });
+                }
+                // (singleImage.id = result.rows[0].id)
+            )
+            .catch((err) => {
+                "posterror:", err;
+            });
+    } else {
+        res.json({ error: true });
     }
 });
 

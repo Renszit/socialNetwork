@@ -58,12 +58,14 @@ export default class App extends Component {
             <div>
                 <header>
                     <p className="pTags">community for a future unreality</p>
-                    <ProfilePic
-                        toggleUploader={() => this.toggleUploader()}
-                        first={this.state.first}
-                        last={this.state.last}
-                        url={this.state.url}
-                    />
+                    <div className="profilePicContainer">
+                        <ProfilePic
+                            toggleUploader={() => this.toggleUploader()}
+                            first={this.state.first}
+                            last={this.state.last}
+                            url={this.state.url}
+                        />
+                    </div>
                 </header>
                 <Profile
                     toggleUploader={() => this.toggleUploader()}

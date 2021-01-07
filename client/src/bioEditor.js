@@ -32,10 +32,6 @@ export default class BioEditor extends Component {
         }
     }
 
-    //call a method within this component, making post request to server, updating value of the bio
-    //once succesful, call method passed down from app component,
-    // updating the value of bio in app
-
     render() {
         return (
             <div>
@@ -45,7 +41,14 @@ export default class BioEditor extends Component {
                         onChange={(e) => this.handleChange(e)}
                     />
                 )}
-                <button onClick={() => this.toggleText()}>update bio</button>
+                {!this.props.bio && (
+                    <button onClick={() => this.toggleText()}>add a bio</button>
+                )}
+                {this.props.bio && (
+                    <button onClick={() => this.toggleText()}>
+                        update bio
+                    </button>
+                )}
             </div>
         );
     }

@@ -7,13 +7,13 @@ export default function Profile(props) {
     return (
         <div>
             <div className="profileContainer">
-                <h3>Hi {first}, here you can change your bio!</h3>
-                <h3>Bio:</h3>
-                <p>
-                    {first} {last}:
-                </p>
-                <p>{bio}</p>
-                <ProfilePic url={url} toggleUploader={toggleUploader} />
+                <h3>
+                    Hi {first} {last}, this is your Bio:
+                </h3>
+                <p> {bio}</p>
+                <div className="bioPicContainer">
+                    <ProfilePic url={url} toggleUploader={toggleUploader} />
+                </div>
                 <BioEditor setBio={setBio} bio={bio} />
             </div>
         </div>

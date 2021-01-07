@@ -38,7 +38,7 @@ input {
 }
 
 .error {
-    color:#F26430;
+    color: #f26430;
     font-size: 15px;
     font-weight: 300;
 }
@@ -57,15 +57,16 @@ input {
     margin: 2px;
     font-size: 15px;
     text-decoration: none;
-}   
+}
 
 .linkTags:visited {
     text-decoration: none;
-    color: #F4EEA9;
+    color: #f4eea9;
 }
 
 .profileImg {
-    width: 30px;
-    height: 30px;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
     border-radius: 50%;
 }

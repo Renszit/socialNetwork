@@ -21,6 +21,7 @@ export default class App extends Component {
         super();
         this.state = {
             uploaderVisible: false,
+            url: "",
         };
     }
 
@@ -62,7 +63,11 @@ export default class App extends Component {
                     Upload new profilepic
                 </p>
                 {this.state.uploaderVisible && (
-                    <Uploader setImage={() => this.setImage} />
+                    <Uploader
+                        setImage={(newProfilePic) =>
+                            this.setImage(newProfilePic)
+                        }
+                    />
                 )}
             </div>
         );

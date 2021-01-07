@@ -26,7 +26,7 @@ export default class Uploader extends Component {
         console.log("props in uploader", formData);
         axios
             .post("/upload", formData)
-            .then((res) => this.props.setImage(res.data))
+            .then((res) => this.props.setImage(res.data.url))
             .catch((err) => console.log("error in imageupload", err));
     }
 

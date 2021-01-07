@@ -173,7 +173,6 @@ app.get("/profile", (req, res) => {
 
 app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {
     if (req.file) {
-        console.log(req.file.filename);
         const image = `${s3Url}${req.file.filename}`;
         db.putImage(req.session.userId, image)
             .then(

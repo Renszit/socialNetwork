@@ -13,12 +13,6 @@ export default class Uploader extends Component {
             image: {},
         };
     }
-    /* 
-        Uploader has three jobs:
-        1. store the image the user selected in its own state // imageboard
-        2. send file to server // imageboard
-        3. let app know there is a new profile picture, and that app needs to update its own state
-    */
 
     handleClick() {
         const formData = new FormData();
@@ -27,6 +21,7 @@ export default class Uploader extends Component {
         axios
             .post("/upload", formData)
             .then((res) => this.props.setImage(res.data.url))
+            .then(() => this.props.toggleUploader())
             .catch((err) => console.log("error in imageupload", err));
     }
 
@@ -42,13 +37,19 @@ export default class Uploader extends Component {
     render() {
         return (
             <div>
-                <input
-                    onChange={(e) => this.handleChange(e)}
-                    name="image"
-                    type="file"
-                    accept="image/*"
-                ></input>
-                <button onClick={() => this.handleClick()}>upload!</button>
+                <div className="modalContainer">
+                    <div className="popupModal">
+                        <input
+                            onChange={(e) => this.handleChange(e)}
+                            name="image"
+                            type="file"
+                            accept="image/*"
+                        ></input>
+                        <button onClick={() => this.handleClick()}>
+                            upload!
+                        </button>
+                    </div>
+                </div>
             </div>
         );
     }

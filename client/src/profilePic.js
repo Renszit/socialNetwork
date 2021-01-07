@@ -4,14 +4,16 @@
 // Render default image if user does not have profile pic!
 
 export default function ProfilePic(props) {
-    const { first, last, url } = props;
+    const { first, url, toggleUploader } = props;
     // console.log("props in ProfilePic:", props);
     return (
         <div>
-            <h1>
-                Welcome {first} {last}!
-            </h1>
-            <img className="profileImg" src={url}></img>
+            <img
+                onClick={toggleUploader}
+                className="profileImg"
+                src={url}
+                alt={first}
+            ></img>
         </div>
     );
 }

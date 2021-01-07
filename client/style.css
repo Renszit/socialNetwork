@@ -1,5 +1,6 @@
 * {
     font-family: "IBM Plex Mono";
+    margin: 0;
 }
 
 body {
@@ -8,6 +9,15 @@ body {
 
 input {
     margin: 5px;
+}
+
+header {
+    display: flex;
+    margin: 0;
+    padding: 10px;
+    background-color: #3c6e71;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .largeLogoContainer {
@@ -65,8 +75,32 @@ input {
 }
 
 .profileImg {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
     border-radius: 50%;
+}
+
+.popupModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    width: 400px;
+    height: 100px;
+    background-color: #3c6e71;
+}
+
+.modalContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profileContainer {
+    background-color: #3c6e71;
+    width: fit-content;
+    margin: 10px;
+    padding: 10px;
 }

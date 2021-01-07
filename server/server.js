@@ -52,7 +52,7 @@ app.use(
 app.use(csurf());
 
 app.use(function (req, res, next) {
-    console.log("token", req.csrfToken());
+    // console.log("token", req.csrfToken());
     res.cookie("mytoken", req.csrfToken());
     next();
 });
@@ -155,7 +155,7 @@ app.get("/profile", (req, res) => {
     const id = req.session.userId;
     db.getProfile(id)
         .then(({ rows }) => {
-            const { first, last, email, created_at, url } = rows[0];
+            const { first, last, email, bio, created_at, url } = rows[0];
             res.json({
                 id: id,
                 first: first,
@@ -163,12 +163,22 @@ app.get("/profile", (req, res) => {
                 email: email,
                 createdAt: created_at,
                 url: url,
+                bio: bio,
             });
         })
         .catch((err) => {
             console.error("error in profile get ", err);
             res.json({ error: true });
         });
+});
+
+app.post("/bio", (req, res) => {
+    const { draftBio } = req.body;
+    db.postBio(draftBio, req.session.userId)
+        .then(() => {
+            res.json({ bio: draftBio });
+        })
+        .catch((err) => console.log("error in posting bio:", err));
 });
 
 app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {

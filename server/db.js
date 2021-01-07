@@ -51,7 +51,13 @@ module.exports.putImage = (userId, url) => {
 };
 
 module.exports.getProfile = (userId) => {
-    const q = `SELECT first, last, email, created_at, url FROM users WHERE id = ($1)`;
+    const q = `SELECT first, last, email, created_at, bio, url FROM users WHERE id = ($1)`;
     const param = [userId];
+    return db.query(q, param);
+};
+
+module.exports.postBio = (bio, userId) => {
+    const q = `UPDATE users SET bio = ($1) WHERE id= ($2)`;
+    const param = [bio, userId];
     return db.query(q, param);
 };

@@ -1,20 +1,8 @@
-//main app component
-// children:
-// 1: profilePic.js
-// 2: uploader.js
-// 3: logo component (optional)
-
-// app class component
-// render Profile pic and Uploader
-// store in state-> data about user
-// data = everything except the password;
-// passes the data (props) to every child component that might need it
-// toggle the modal (for uploading)
-
 import axios from "./axios";
 import { Component } from "react";
 import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
+import Profile from "./profile";
 
 export default class App extends Component {
     constructor() {
@@ -25,14 +13,23 @@ export default class App extends Component {
         };
     }
 
+    checkDefault() {
+        if (this.state.url == null) {
+            this.setState({
+                url: "./missing-profile-photo.jpeg",
+            });
+        }
+    }
+
     componentDidMount() {
         console.log("app mounted!");
         axios
             .get("/profile")
             .then((res) => {
-                console.log("response profile get route:", res.data);
+                console.log(res.data);
                 this.setState(res.data);
             })
+            .then(() => this.checkDefault())
             .catch((err) => console.log("error in profile axios", err));
     }
 
@@ -44,26 +41,41 @@ export default class App extends Component {
     }
 
     setImage(newProfilePic) {
-        console.log("newProfilepic:", newProfilePic);
+        // console.log("newProfilepic:", newProfilePic);
         this.setState({
             url: newProfilePic,
+        });
+    }
+
+    setBio(newBio) {
+        this.setState({
+            bio: newBio,
         });
     }
 
     render() {
         return (
             <div>
-                <h1>App</h1>
-                <ProfilePic
+                <header>
+                    <p className="pTags">community for a future unreality</p>
+                    <ProfilePic
+                        toggleUploader={() => this.toggleUploader()}
+                        first={this.state.first}
+                        last={this.state.last}
+                        url={this.state.url}
+                    />
+                </header>
+                <Profile
+                    toggleUploader={() => this.toggleUploader()}
                     first={this.state.first}
                     last={this.state.last}
                     url={this.state.url}
+                    bio={this.state.bio}
+                    setBio={(newBio) => this.setBio(newBio)}
                 />
-                <p onClick={() => this.toggleUploader()}>
-                    Upload new profilepic
-                </p>
                 {this.state.uploaderVisible && (
                     <Uploader
+                        toggleUploader={() => this.toggleUploader()}
                         setImage={(newProfilePic) =>
                             this.setImage(newProfilePic)
                         }

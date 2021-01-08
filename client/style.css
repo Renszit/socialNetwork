@@ -74,7 +74,7 @@ header {
     color: #f4eea9;
 }
 
-.profilePicContainer {
+.profilePicContainer img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -82,17 +82,12 @@ header {
     object-fit: cover;
 }
 
-.bioPicContainer {
-    width: 200px;
-    height: 200px;
+.bioPicContainer img {
+    width: 250px;
+    height: 250px;
     border: dashed 1px white;
     overflow: hidden;
     object-fit: cover;
-}
-
-.profileImg {
-    width: 100%;
-    height: 100%;
 }
 
 .popupModal {

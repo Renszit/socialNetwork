@@ -151,8 +151,28 @@ app.get("/welcome", (req, res) => {
     }
 });
 
+app.get("/user/:id.json", (req, res) => {
+    console.log("server req body:", req.params.id);
+    const id = req.params.id;
+    db.getProfile(id)
+        .then(({ rows }) => {
+            console.log("rows in getprofile:", rows);
+            const { first, last, bio, url } = rows[0];
+            res.json({
+                first: first,
+                last: last,
+                bio: bio,
+                url: url,
+            });
+        })
+        .catch((err) => {
+            "serverside ERROR get other user", err;
+        });
+});
+
 app.get("/profile", (req, res) => {
     const id = req.session.userId;
+    console.log()
     db.getProfile(id)
         .then(({ rows }) => {
             const { first, last, email, bio, created_at, url } = rows[0];

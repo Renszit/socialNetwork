@@ -5,12 +5,7 @@ export default function ProfilePic(props) {
     // console.log("props in ProfilePic:", props);
     return (
         <div>
-            <img
-                onClick={toggleUploader}
-                className="profileImg"
-                src={url}
-                alt={first}
-            ></img>
+            <img onClick={toggleUploader} src={url} alt={first}></img>
         </div>
     );
 }

@@ -8,13 +8,13 @@ export default function Profile(props) {
         <div>
             <div className="profileContainer">
                 <h3>
-                    Hi {first} {last}, this is your Bio:
+                    Hi {first} {last}, welcome to this space
                 </h3>
                 <p> {bio}</p>
+                <BioEditor setBio={setBio} bio={bio} />
                 <div className="bioPicContainer">
                     <ProfilePic url={url} toggleUploader={toggleUploader} />
                 </div>
-                <BioEditor setBio={setBio} bio={bio} />
             </div>
         </div>
     );

@@ -1,8 +1,4 @@
-//child of app
 
-// is the "click here to upload a profile pic" modal
-// takes image that user selected + sends it off to server
-// let's App know there's a new profile picture (update app state)
 import axios from "./axios";
 import { Component } from "react";
 

@@ -9,11 +9,12 @@ export default class OtherProfile extends Component {
 
     componentDidMount() {
         console.log("this.props.match", this.props.match.params.id);
+        // const params = this.props.match.params.id;
         // const otherid = this.props.match.params.id;
         //to get access to the id ( for rendering the correct profile )
         // if we are viewing our own profile, we should make sure to send the user back to the '/' route
         axios
-            .get("/user/:id.json")
+            .get("/app/user/" + this.props.match.params.id)
             .then((res) => console.log("Otherprofile mounted response:", res))
             .catch((err) => console.log("Otherprofile mounted ERROR:", err));
         //axios request to get that specific's information

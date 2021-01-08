@@ -151,10 +151,10 @@ app.get("/welcome", (req, res) => {
     }
 });
 
-app.get("/user/:id.json", (req, res) => {
-    console.log("server req body:", req.params.id);
-    const id = req.params.id;
-    db.getProfile(id)
+app.get("/app/user/:id", (req, res) => {
+    console.log("server req body:", req.params);
+    // const id = req.data.id;
+    db.getProfile(req.params.id)
         .then(({ rows }) => {
             console.log("rows in getprofile:", rows);
             const { first, last, bio, url } = rows[0];
@@ -172,7 +172,7 @@ app.get("/user/:id.json", (req, res) => {
 
 app.get("/profile", (req, res) => {
     const id = req.session.userId;
-    console.log()
+
     db.getProfile(id)
         .then(({ rows }) => {
             const { first, last, email, bio, created_at, url } = rows[0];

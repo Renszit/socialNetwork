@@ -1,4 +1,3 @@
-
 import { HashRouter, Route } from "react-router-dom";
 import Registration from "./registration";
 import Login from "./login";
@@ -8,10 +7,6 @@ export default function Welcome() {
     return (
         <div>
             <div className="largeLogoContainer">
-                <img
-                    className="logoLarge"
-                    src="Surrealism_logo_large.svg"
-                ></img>
                 <p className="pTags">community for a future unreality</p>
             </div>
             <HashRouter>

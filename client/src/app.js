@@ -28,7 +28,7 @@ export default class App extends Component {
         axios
             .get("/profile")
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 this.setState(res.data);
             })
             .then(() => this.checkDefault())
@@ -95,7 +95,6 @@ export default class App extends Component {
                                 key={props.match.url}
                                 match={props.match}
                                 history={props.history}
-                                // user={this.state.id}
                             />
                         )}
                     />

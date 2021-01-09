@@ -1,10 +1,11 @@
 * {
     font-family: "IBM Plex Mono";
+    color: #272727;
     margin: 0;
 }
 
 body {
-    background-color: #96c3ce;
+    background-color: #9dbf9e;
 }
 
 input {
@@ -15,12 +16,13 @@ header {
     display: flex;
     margin: 0;
     padding: 10px;
-    background-color: #3c6e71;
+    background-color: #d5573b;
     justify-content: space-between;
     align-items: center;
 }
 
 .largeLogoContainer {
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,7 +50,7 @@ header {
 }
 
 .error {
-    color: #f26430;
+    color: #d5573b;
     font-size: 15px;
     font-weight: 300;
 }
@@ -59,7 +61,7 @@ header {
 
 .pTags {
     font-family: "Special Elite";
-    color: #a79ab2;
+    color: #272727;
     font-size: 30px;
 }
 
@@ -81,11 +83,30 @@ header {
     overflow: hidden;
     object-fit: cover;
 }
+.otherProfileContainer img {
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.otherProfileContainer {
+    display: flex;
+    background-color: #d5573b;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.otherTitle {
+    margin-left: 20px;
+}
 
 .bioPicContainer img {
     width: 250px;
     height: 250px;
-    border: dashed 1px white;
+    border-radius: 10px;
     overflow: hidden;
     object-fit: cover;
 }
@@ -98,7 +119,12 @@ header {
     position: fixed;
     width: 400px;
     height: 100px;
-    background-color: #3c6e71;
+    z-index: 1;
+    background-color: #eca72c;
+}
+
+.bioButton {
+    margin-top: 20px;
 }
 
 .modalContainer {
@@ -108,8 +134,13 @@ header {
 }
 
 .profileContainer {
-    background-color: #3c6e71;
-    width: max-content;
+    display: flex;
+    border-radius: 10px;
+    background-color: #d5573b;
     margin: 10px;
     padding: 10px;
+}
+
+.myProfileContainer {
+    margin-left: 20px;
 }

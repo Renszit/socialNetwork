@@ -8,28 +8,41 @@ export default class OtherProfile extends Component {
     }
 
     componentDidMount() {
-        console.log("this.props.match", this.props.match.params.id);
-        // const params = this.props.match.params.id;
-        // const otherid = this.props.match.params.id;
-        //to get access to the id ( for rendering the correct profile )
-        // if we are viewing our own profile, we should make sure to send the user back to the '/' route
-        axios
-            .get("/app/user/" + this.props.match.params.id)
-            .then((res) => console.log("Otherprofile mounted response:", res))
-            .catch((err) => console.log("Otherprofile mounted ERROR:", err));
-        //axios request to get that specific's information
-        //don't make that request to user/id// change it in server to user/:id.json
-
-        // //"32" = the userId
-        if (this.props.match.params.id == this.props.id) {
-            this.props.history.push("/");
-        }
+        axios.get("/profile").then((res) => {
+            console.log("res data id:", res.data.id);
+            if (this.props.match.params.id == res.data.id) {
+                this.props.history.push("/");
+            } else {
+                axios
+                    .get("/app/user/" + this.props.match.params.id)
+                    .then((res) => {
+                        console.log("res.data! 2nd axxios;", res.data);
+                        if (res.data && !res.data.error) {
+                            console.log(res.data);
+                            this.setState(res.data);
+                        } else {
+                            this.props.history.push("/");
+                        }
+                    })
+                    .catch((err) =>
+                        console.log("Otherprofile mounted ERROR:", err)
+                    );
+            }
+        });
     }
 
     render() {
         return (
             <div>
-                <h1>Other profile component</h1>
+                <div className="otherProfileContainer">
+                    <img src={this.state.url}></img>
+                    <div className="otherTitle">
+                        <h1>
+                            {this.state.first} {this.state.last}
+                        </h1>
+                        <p>{this.state.bio}</p>
+                    </div>
+                </div>
             </div>
         );
     }

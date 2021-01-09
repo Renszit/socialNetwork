@@ -153,10 +153,9 @@ app.get("/welcome", (req, res) => {
 
 app.get("/app/user/:id", (req, res) => {
     console.log("server req body:", req.params);
-    // const id = req.data.id;
     db.getProfile(req.params.id)
         .then(({ rows }) => {
-            console.log("rows in getprofile:", rows);
+            console.log("rows in getprofile:", rows[0].first);
             const { first, last, bio, url } = rows[0];
             res.json({
                 first: first,
@@ -164,9 +163,18 @@ app.get("/app/user/:id", (req, res) => {
                 bio: bio,
                 url: url,
             });
+            // } else {
+            //     console.log("error in get, no user", rows);
+            //     res.json({
+            //         error: true,
+            //     });
+            // }
         })
         .catch((err) => {
-            "serverside ERROR get other user", err;
+            res.json({
+                error: true,
+            });
+            console.log("User does not exist", err);
         });
 });
 

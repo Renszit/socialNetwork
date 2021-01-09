@@ -36,17 +36,25 @@ export default class BioEditor extends Component {
         return (
             <div>
                 {this.state.textareaVisible && (
-                    <textarea
+                    <textarea className="bioButton"
                         name="draftBio"
                         onChange={(e) => this.handleChange(e)}
                     />
                 )}
                 {!this.props.bio && (
-                    <button onClick={() => this.toggleText()}>add a bio</button>
+                    <button
+                        className="bioButton"
+                        onClick={() => this.toggleText()}
+                    >
+                        Add bio!
+                    </button>
                 )}
                 {this.props.bio && (
-                    <button onClick={() => this.toggleText()}>
-                        update bio
+                    <button
+                        className="bioButton"
+                        onClick={() => this.toggleText()}
+                    >
+                        Edit bio
                     </button>
                 )}
             </div>

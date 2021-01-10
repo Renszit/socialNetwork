@@ -14,8 +14,9 @@ input {
 
 header {
     display: flex;
-    margin: 0;
+    margin: 10px;
     padding: 10px;
+    border-radius: 10px;
     background-color: #d5573b;
     justify-content: space-between;
     align-items: center;

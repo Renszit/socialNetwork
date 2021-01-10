@@ -163,12 +163,6 @@ app.get("/app/user/:id", (req, res) => {
                 bio: bio,
                 url: url,
             });
-            // } else {
-            //     console.log("error in get, no user", rows);
-            //     res.json({
-            //         error: true,
-            //     });
-            // }
         })
         .catch((err) => {
             res.json({
@@ -180,7 +174,6 @@ app.get("/app/user/:id", (req, res) => {
 
 app.get("/profile", (req, res) => {
     const id = req.session.userId;
-
     db.getProfile(id)
         .then(({ rows }) => {
             const { first, last, email, bio, created_at, url } = rows[0];

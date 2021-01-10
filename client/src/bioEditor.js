@@ -24,6 +24,9 @@ export default class BioEditor extends Component {
         this.setState({
             textareaVisible: !this.state.textareaVisible,
         });
+    }
+
+    bioAxios() {
         if (this.state.textareaVisible) {
             axios
                 .post("/bio", this.state)
@@ -36,11 +39,14 @@ export default class BioEditor extends Component {
         return (
             <div>
                 {this.state.textareaVisible && (
-                    <textarea className="bioButton"
+                    <textarea
+                        className="bioButton"
                         name="draftBio"
                         onChange={(e) => this.handleChange(e)}
+                        defaultValue={this.props.bio}
                     />
                 )}
+
                 {!this.props.bio && (
                     <button
                         className="bioButton"
@@ -55,6 +61,15 @@ export default class BioEditor extends Component {
                         onClick={() => this.toggleText()}
                     >
                         Edit bio
+                    </button>
+                )}
+
+                {this.state.textareaVisible && (
+                    <button
+                        className="bioButton"
+                        onClick={() => this.bioAxios()}
+                    >
+                        Save
                     </button>
                 )}
             </div>

@@ -67,9 +67,11 @@ export default class App extends Component {
                             community for a future unreality
                         </p>
                         <Link to={"/users"}>
-                            <p>find users</p>
+                            <p>Find users</p>
                         </Link>
-
+                        <Link to={"/"}>
+                            <p>Profile</p>
+                        </Link>
                         <p onClick={this.logout}>logout</p>
 
                         <div className="profilePicContainer">

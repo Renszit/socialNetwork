@@ -3,8 +3,9 @@ import { Component } from "react";
 import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import Profile from "./profile";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Link, Route } from "react-router-dom";
 import OtherProfile from "./otherProfile";
+import FindPeople from "./findPeople";
 
 export default class App extends Component {
     constructor() {
@@ -36,14 +37,12 @@ export default class App extends Component {
     }
 
     toggleUploader() {
-        // console.log("toggle uploader is running!");
         this.setState({
             uploaderVisible: !this.state.uploaderVisible,
         });
     }
 
     setImage(newProfilePic) {
-        // console.log("newProfilepic:", newProfilePic);
         this.setState({
             url: newProfilePic,
         });
@@ -55,6 +54,10 @@ export default class App extends Component {
         });
     }
 
+    logout() {
+        axios.get("/logout").then(() => location.replace("/welcome"));
+    }
+
     render() {
         return (
             <BrowserRouter>
@@ -63,6 +66,12 @@ export default class App extends Component {
                         <p className="pTags">
                             community for a future unreality
                         </p>
+                        <Link to={"/users"}>
+                            <p>find users</p>
+                        </Link>
+
+                        <p onClick={this.logout}>logout</p>
+
                         <div className="profilePicContainer">
                             <ProfilePic
                                 toggleUploader={() => this.toggleUploader()}
@@ -72,7 +81,6 @@ export default class App extends Component {
                             />
                         </div>
                     </header>
-
                     <Route
                         exact
                         path="/"
@@ -87,6 +95,8 @@ export default class App extends Component {
                             />
                         )}
                     />
+
+                    <Route exact path="/users" render={() => <FindPeople />} />
 
                     <Route
                         path="/user/:id"

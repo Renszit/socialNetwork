@@ -145,3 +145,45 @@ header {
 .myProfileContainer {
     margin-left: 20px;
 }
+
+.findPeopleContainer {
+    margin: 10px;
+    padding: 10px;
+    background-color: #d5573b;
+    border-radius: 10px;
+}
+
+.membersLookupContainer {
+    margin: 10px;
+    padding: 10px;
+    background-color: #d5573b;
+    border-radius: 10px;
+}
+
+.userBlock {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.searchImgContainer {
+    background-color: #f4eea9;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.searchImgContainer:hover {
+    background-color: #9dbf9e;
+    color: white;
+}
+
+.searchImgContainer img {
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    overflow: hidden;
+    object-fit: cover;
+}

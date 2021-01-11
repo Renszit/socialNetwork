@@ -13,6 +13,8 @@ const uidSafe = require("uid-safe");
 const s3 = require("./s3");
 const { s3Url } = require("./config");
 
+/////////////////////////////////////////////////////////////
+
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, __dirname + "/uploads");
@@ -70,12 +72,15 @@ app.post("/registration", (req, res) => {
                 })
                 .catch((err) => {
                     res.json({ error: true });
-                    console.log("error in registratioooon", err);
+                    console.log(
+                        "🚀 ~ file: server.js ~ line 74 ~ .then ~ err",
+                        err
+                    );
                 });
         })
         .catch((err) => {
+            console.log("🚀 ~ file: server.js ~ line 82 ~ app.post ~ err", err);
             res.json({ error: true });
-            console.log("error in registration", err);
         });
 });
 
@@ -83,10 +88,8 @@ app.post("/login", (req, res) => {
     const { email, password } = req.body;
     db.getHashAndEmail(email)
         .then(({ rows }) => {
-            console.log("result rows:", rows);
             const { pass: hash, id: userId } = rows[0];
             compare(password, hash).then((result) => {
-                // console.log("login post result:" ,result);
                 if (result) {
                     req.session.userId = userId;
                     res.json("/");
@@ -96,7 +99,10 @@ app.post("/login", (req, res) => {
             });
         })
         .catch((err) => {
-            console.log("error in login", err);
+            console.log(
+                "🚀 ~ file: server.js ~ line 104 ~ app.post ~ err",
+                err
+            );
             res.json({ error: true });
         });
 });
@@ -119,7 +125,10 @@ app.post("/password/reset/start", (req, res) => {
                     res.json({ view: 2 });
                 })
                 .catch((err) => {
-                    console.log("error in password reset 1", err);
+                    console.log(
+                        "🚀 ~ file: server.js ~ line 127 ~ .then ~ err",
+                        err
+                    );
                     res.json({ error: true });
                 });
         })
@@ -137,9 +146,12 @@ app.post("/password/reset/verify", (req, res) => {
                 .then((hashedpass) => db.updatePassword(hashedpass, email))
                 .then(() => res.json({ view: 3 }));
         })
-        .catch(() => {
+        .catch((err) => {
+            console.log(
+                "🚀 ~ file: server.js ~ line 146 ~ app.post ~ err",
+                err
+            );
             res.json({ error: true });
-            // console.log("error in verify:", err);
         });
 });
 
@@ -155,7 +167,7 @@ app.get("/app/user/:id", (req, res) => {
     console.log("server req body:", req.params);
     db.getProfile(req.params.id)
         .then(({ rows }) => {
-            console.log("rows in getprofile:", rows[0].first);
+            // console.log("rows in getprofile:", rows[0].first);
             const { first, last, bio, url } = rows[0];
             res.json({
                 first: first,
@@ -165,10 +177,10 @@ app.get("/app/user/:id", (req, res) => {
             });
         })
         .catch((err) => {
+            console.log("🚀 ~ file: server.js ~ line 173 ~ app.get ~ err", err);
             res.json({
                 error: true,
             });
-            console.log("User does not exist", err);
         });
 });
 
@@ -188,7 +200,7 @@ app.get("/profile", (req, res) => {
             });
         })
         .catch((err) => {
-            console.error("error in profile get ", err);
+            console.log("🚀 ~ file: server.js ~ line 196 ~ app.get ~ err", err);
             res.json({ error: true });
         });
 });
@@ -213,11 +225,39 @@ app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {
                 // (singleImage.id = result.rows[0].id)
             )
             .catch((err) => {
+                console.log(
+                    "🚀 ~ file: server.js ~ line 221 ~ app.post ~ err",
+                    err
+                );
                 "posterror:", err;
             });
     } else {
         res.json({ error: true });
     }
+});
+
+app.get("/users/recent", (req, res) => {
+    db.getRecentThree()
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch((err) =>
+            console.log("🚀 ~ file: server.js ~ line 247 ~ app.get ~ err", err)
+        );
+});
+
+app.get("/users/search", (req, res) => {
+    // console.log("🚀 ~ file: server.js ~ line 250 ~ app.get ~ req", req);
+    db.searchForUsers(req.query.value)
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch((err) => console.log("error in users: name", err));
+});
+
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.sendStatus(200);
 });
 
 app.get("*", function (req, res) {

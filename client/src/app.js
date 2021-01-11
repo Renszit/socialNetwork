@@ -96,7 +96,15 @@ export default class App extends Component {
                         )}
                     />
 
-                    <Route exact path="/users" render={() => <FindPeople />} />
+                    <Route
+                        exact
+                        path="/users"
+                        render={() => (
+                            <FindPeople
+                                checkDefault={() => this.checkDefault}
+                            />
+                        )}
+                    />
 
                     <Route
                         path="/user/:id"

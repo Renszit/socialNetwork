@@ -53,7 +53,15 @@ export default function FindPeople() {
                         <div key={index}>
                             <Link to={`/user/${user.id}`}>
                                 <div className="searchImgContainer">
-                                    <img className="" src={user.url}></img>
+                                    {user.url && (
+                                        <img className="" src={user.url}></img>
+                                    )}
+                                    {!user.url && (
+                                        <img
+                                            className=""
+                                            src="./missing-profile-photo.jpeg"
+                                        ></img>
+                                    )}
                                     <p>
                                         {user.first} {user.last}
                                     </p>

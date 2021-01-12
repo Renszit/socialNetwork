@@ -3,7 +3,7 @@ import ProfilePic from "./profilePic";
 
 export default function Profile(props) {
     // console.log("properties app profile", props);
-    const { first, last, url, bio, setBio, toggleUploader } = props;
+    const { first, last, url, bio, setBio, toggleUploader, } = props;
     return (
         <div>
             <div className="profileContainer">

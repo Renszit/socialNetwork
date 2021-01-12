@@ -1,5 +1,6 @@
 import { Component } from "react";
 import axios from "./axios";
+import AddAsFriend from "./addAsFriend";
 
 export default class OtherProfile extends Component {
     constructor(props) {
@@ -35,12 +36,16 @@ export default class OtherProfile extends Component {
         return (
             <div>
                 <div className="otherProfileContainer">
-                    <img src={this.state.url}></img>
+                    {this.state.url && <img src={this.state.url}></img>}
+                    {!this.state.url && (
+                        <img src="/missing-profile-photo.jpeg"></img>
+                    )}
                     <div className="otherTitle">
                         <h1>
                             {this.state.first} {this.state.last}
                         </h1>
                         <p>{this.state.bio}</p>
+                        <AddAsFriend otherUserId={this.props.match.params.id} />
                     </div>
                 </div>
             </div>

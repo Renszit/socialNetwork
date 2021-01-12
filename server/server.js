@@ -12,6 +12,7 @@ const multer = require("multer");
 const uidSafe = require("uid-safe");
 const s3 = require("./s3");
 const { s3Url } = require("./config");
+const friendships = require("./friendships");
 
 /////////////////////////////////////////////////////////////
 
@@ -164,12 +165,13 @@ app.get("/welcome", (req, res) => {
 });
 
 app.get("/app/user/:id", (req, res) => {
-    console.log("server req body:", req.params);
+    // console.log("server req body:", req.params);
     db.getProfile(req.params.id)
         .then(({ rows }) => {
             // console.log("rows in getprofile:", rows[0].first);
-            const { first, last, bio, url } = rows[0];
+            const { first, last, bio, url, id } = rows[0];
             res.json({
+                id: id,
                 first: first,
                 last: last,
                 bio: bio,
@@ -259,6 +261,17 @@ app.get("/logout", (req, res) => {
     req.session = null;
     res.sendStatus(200);
 });
+
+// /Friendships
+app.get("/friendship-status/:id", (req, res) => {
+    // console.log("my id:", req.session.userId);
+    // console.log("friendship id:", req.params.id);
+    friendships
+        .getFriendshipStatus(req.session.userId, req.params.id)
+        .then(({ rows }) => res.json(rows));
+});
+
+app.post("friendship-req");
 
 app.get("*", function (req, res) {
     if (!req.session.userId) {

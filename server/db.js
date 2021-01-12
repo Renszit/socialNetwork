@@ -51,7 +51,7 @@ module.exports.putImage = (userId, url) => {
 };
 
 module.exports.getProfile = (userId) => {
-    const q = `SELECT first, last, email, created_at, bio, url FROM users WHERE id = ($1)`;
+    const q = `SELECT first, id, last, email, created_at, bio, url FROM users WHERE id = ($1)`;
     const param = [userId];
     return db.query(q, param);
 };

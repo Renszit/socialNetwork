@@ -1,4 +1,3 @@
-
 import axios from "./axios";
 import { Component } from "react";
 
@@ -13,7 +12,6 @@ export default class Uploader extends Component {
     handleClick() {
         const formData = new FormData();
         formData.append("image", this.state.image);
-        console.log("props in uploader", formData);
         axios
             .post("/upload", formData)
             .then((res) => this.props.setImage(res.data.url))

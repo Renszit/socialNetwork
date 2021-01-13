@@ -62,7 +62,6 @@ app.use(
 app.use(csurf());
 
 app.use(function (req, res, next) {
-    // console.log("token", req.csrfToken());
     res.cookie("mytoken", req.csrfToken());
     next();
 });
@@ -124,7 +123,6 @@ app.post("/password/reset/start", (req, res) => {
         .then(() => {
             db.addSecretCode(email, secretCode)
                 .then(() => {
-                    // console.log("result of pw reset:", result);
                     sendEmail(
                         "renspennings@gmail.com",
                         secretCode,
@@ -172,10 +170,8 @@ app.get("/welcome", (req, res) => {
 });
 
 app.get("/app/user/:id", (req, res) => {
-    // console.log("server req body:", req.params);
     db.getProfile(req.params.id)
         .then(({ rows }) => {
-            // console.log("rows in getprofile:", rows[0].first);
             const { first, last, bio, url, id } = rows[0];
             res.json({
                 id: id,
@@ -227,18 +223,14 @@ app.post("/upload", uploader.single("image"), s3.upload, (req, res) => {
     if (req.file) {
         const image = `${s3Url}${req.file.filename}`;
         db.putImage(req.session.userId, image)
-            .then(
-                () => {
-                    res.json({ url: image });
-                }
-                // (singleImage.id = result.rows[0].id)
-            )
+            .then(() => {
+                res.json({ url: image });
+            })
             .catch((err) => {
                 console.log(
                     "🚀 ~ file: server.js ~ line 221 ~ app.post ~ err",
                     err
                 );
-                "posterror:", err;
             });
     } else {
         res.json({ error: true });
@@ -256,7 +248,6 @@ app.get("/users/recent", (req, res) => {
 });
 
 app.get("/users/search", (req, res) => {
-    // console.log("🚀 ~ file: server.js ~ line 250 ~ app.get ~ req", req);
     db.searchForUsers(req.query.value)
         .then(({ rows }) => {
             res.json(rows);
@@ -271,8 +262,6 @@ app.get("/logout", (req, res) => {
 
 // /Friendships
 app.get("/friendship-status/:id", (req, res) => {
-    console.log("my id:", req.session.userId);
-    console.log("friendship id:", req.params.id);
     friendships
         .getFriendshipStatus(req.session.userId, req.params.id)
         .then(({ rows }) =>
@@ -286,7 +275,7 @@ app.get("/friendship-status/:id", (req, res) => {
 app.post("/friendship-req", (req, res) => {
     const { action, otherUser } = req.body;
     const userId = req.session.userId;
-    // console.log("action friend req;", action);
+  
     if (action == BUTTON_TEXT.ACCEPT_REQUEST) {
         friendships
             .friendAccept(userId, otherUser)

@@ -56,11 +56,11 @@ function buttonTextAdapt(status) {
     let text = BUTTON_TEXT.MAKE_REQUEST;
     console.log("status buttontext reqeus", status);
     if (!status.rows.length == 0) {
-        // console.log("status rows:", status);
+        console.log("status rows:", status);
         const { sender_id, accepted } = status.rows;
-        const { userId } = status.userId;
-        // console.log("userId:", userId);
-        if (accepted) {
+        const userId = status.userId;
+        console.log("userId:", userId);
+        if (accepted == true) {
             text = BUTTON_TEXT.UNFRIEND;
             return text;
         } else if (sender_id == userId) {

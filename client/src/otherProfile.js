@@ -17,7 +17,7 @@ export default class OtherProfile extends Component {
                 axios
                     .get("/app/user/" + this.props.match.params.id)
                     .then((res) => {
-                        console.log("res.data! 2nd axxios;", res.data);
+                        // console.log("res.data! 2nd axxios;", res.data);
                         if (res.data && !res.data.error) {
                             console.log(res.data);
                             this.setState(res.data);

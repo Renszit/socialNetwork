@@ -11,7 +11,7 @@ const BUTTON_TEXT = {
 export default function AddAsFriend({ otherUserId }) {
     const otherUser = Number(otherUserId);
     const [button, setButton] = useState("");
-    const [status, setStatus] = useState("");
+    // const [status, setStatus] = useState("");
 
     useEffect(() => {
         axios.get(`/friendship-status/${otherUser}`).then(({ data }) => {
@@ -19,7 +19,7 @@ export default function AddAsFriend({ otherUserId }) {
             // console.log("userId", data.userId);
             const buttonText = buttonTextAdapt(data);
             setButton(buttonText);
-            setStatus(data.rows);
+            // setStatus(data.rows);
         });
     }, [otherUserId]);
 
@@ -31,14 +31,9 @@ export default function AddAsFriend({ otherUserId }) {
                 otherUser: otherUser,
             })
             .then(({ data }) => {
-                // console.log("data handleclick:,", data);
+                console.log("data handleclick:,", data);
                 const result = buttonTextAdapt(data);
                 setButton(result);
-                setStatus(data.rows);
-                // console.log(
-                //     "🚀 ~ file: addAsFriend.js ~ line 31 ~ .then ~ data",
-                //     data
-                // );
             })
             .catch((err) => {
                 console.error(`error on friendship req `, err);
@@ -55,12 +50,13 @@ export default function AddAsFriend({ otherUserId }) {
 function buttonTextAdapt(status) {
     let text = BUTTON_TEXT.MAKE_REQUEST;
     console.log("status buttontext reqeus", status);
+
     if (!status.rows.length == 0) {
         console.log("status rows:", status);
-        const { sender_id, accepted } = status.rows;
+        const { sender_id, accepted } = status.rows[0];
         const userId = status.userId;
         console.log("userId:", userId);
-        if (accepted == true) {
+        if (accepted) {
             text = BUTTON_TEXT.UNFRIEND;
             return text;
         } else if (sender_id == userId) {

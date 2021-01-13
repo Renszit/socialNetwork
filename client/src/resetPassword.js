@@ -21,12 +21,10 @@ export default class ResetPassword extends Component {
     }
 
     handleClick() {
-        // console.log("click", this.state);
         if (this.state.view == 1) {
             axios
                 .post("/password/reset/start", this.state)
                 .then((res) => {
-                    console.log("response:", res);
                     if (res.data.error) {
                         this.setState({ error: true });
                     } else {
@@ -42,7 +40,6 @@ export default class ResetPassword extends Component {
             axios
                 .post("/password/reset/verify", this.state)
                 .then((res) => {
-                    // console.log("response:", res);
                     if (res.data.error) {
                         this.setState({ error: true });
                     } else {
@@ -50,7 +47,6 @@ export default class ResetPassword extends Component {
                     }
                 })
                 .catch(() => {
-                    // console.log("handleclick error:", err);
                     this.setState({
                         error: true,
                     });

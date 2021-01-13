@@ -13,7 +13,6 @@ export default function FindPeople() {
             if (!person) {
                 const { data } = await axios.get("/users/recent");
                 if (!abort) {
-                    // console.log("data from get request findPeople", data);
                     setResults(data);
                 }
             } else {

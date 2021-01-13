@@ -18,11 +18,9 @@ export default class Login extends Component {
     }
 
     handleClick() {
-        console.log("click", this.state);
         axios
             .post("/login", this.state)
             .then((res) => {
-                console.log("response:", res);
                 if (res.data.error) {
                     this.setState({ error: true });
                 } else {

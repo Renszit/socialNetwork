@@ -11,22 +11,17 @@ const BUTTON_TEXT = {
 export default function AddAsFriend({ otherUserId }) {
     const otherUser = Number(otherUserId);
     const [button, setButton] = useState("");
-    // const [status, setStatus] = useState("");
 
     useEffect(() => {
         axios.get(`/friendship-status/${otherUser}`).then(({ data }) => {
-            // console.log("data useeffect:", data.rows);
-            // console.log("userId", data.userId);
             const buttonText = buttonTextAdapt(data);
             setButton(buttonText);
-            // setStatus(data.rows);
         });
     }, [otherUserId]);
 
     function handleClick() {
         axios
             .post("/friendship-req", {
-                // status: status,
                 action: button,
                 otherUser: otherUser,
             })
@@ -52,10 +47,9 @@ function buttonTextAdapt(status) {
     console.log("status buttontext reqeus", status);
 
     if (!status.rows.length == 0) {
-        console.log("status rows:", status);
         const { sender_id, accepted } = status.rows[0];
         const userId = status.userId;
-        console.log("userId:", userId);
+
         if (accepted) {
             text = BUTTON_TEXT.UNFRIEND;
             return text;

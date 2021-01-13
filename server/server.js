@@ -14,6 +14,13 @@ const s3 = require("./s3");
 const { s3Url } = require("./config");
 const friendships = require("./friendships");
 
+const BUTTON_TEXT = {
+    MAKE_REQUEST: "Make Request",
+    CANCEL_REQUEST: "Cancel Request",
+    ACCEPT_REQUEST: "Accept Request",
+    UNFRIEND: "Unfriend",
+};
+
 /////////////////////////////////////////////////////////////
 
 const storage = multer.diskStorage({
@@ -264,14 +271,52 @@ app.get("/logout", (req, res) => {
 
 // /Friendships
 app.get("/friendship-status/:id", (req, res) => {
-    // console.log("my id:", req.session.userId);
-    // console.log("friendship id:", req.params.id);
+    console.log("my id:", req.session.userId);
+    console.log("friendship id:", req.params.id);
     friendships
         .getFriendshipStatus(req.session.userId, req.params.id)
-        .then(({ rows }) => res.json(rows));
+        .then(({ rows }) =>
+            res.json({ rows: rows, userId: req.session.userId })
+        )
+        .catch((err) =>
+            console.log("🚀 ~ file: server.js ~ line 285 ~ app.get ~ err", err)
+        );
 });
 
-app.post("friendship-req");
+app.post("/friendship-req", (req, res) => {
+    const { action, otherUser } = req.body;
+    const userId = req.session.userId;
+    // console.log("action friend req;", action);
+    if (action == BUTTON_TEXT.ACCEPT_REQUEST) {
+        friendships
+            .friendAccept(userId, otherUser)
+            .then(({ rows }) => {
+                res.json({ rows: rows, userId: userId });
+            })
+            .catch((err) => console.log("error in friendAccept query", err));
+    } else if (action == BUTTON_TEXT.MAKE_REQUEST) {
+        friendships
+            .makeRequest(userId, otherUser)
+            .then(({ rows }) => {
+                res.json({ rows: rows, userId: userId });
+            })
+            .catch((err) => console.log("error in makeRequest query", err));
+    } else if (action == BUTTON_TEXT.UNFRIEND) {
+        friendships
+            .unfriend(userId, otherUser)
+            .then(() => {
+                res.json({ rows: [], userId: userId });
+            })
+            .catch((err) => console.log("error in unfriending", err));
+    } else if (action == BUTTON_TEXT.CANCEL_REQUEST) {
+        friendships
+            .cancelReq(userId, otherUser)
+            .then(() => {
+                res.json({ rows: [], userId: userId });
+            })
+            .catch((err) => console.log("error in canceling request", err));
+    }
+});
 
 app.get("*", function (req, res) {
     if (!req.session.userId) {

@@ -72,3 +72,5 @@ module.exports.searchForUsers = (val) => {
     const param = [val + "%"];
     return db.query(q, param);
 };
+
+

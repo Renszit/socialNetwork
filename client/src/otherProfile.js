@@ -10,7 +10,7 @@ export default class OtherProfile extends Component {
 
     componentDidMount() {
         axios.get("/profile").then((res) => {
-            console.log("res data id:", res.data.id);
+            // console.log("res data id:", res.data.id);
             if (this.props.match.params.id == res.data.id) {
                 this.props.history.push("/");
             } else {

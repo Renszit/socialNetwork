@@ -10,6 +10,7 @@ const cryptoRandomString = require("crypto-random-string");
 const { sendEmail } = require("./ses");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
+
 const s3 = require("./s3");
 const { s3Url } = require("./config");
 const friendships = require("./friendships");
@@ -272,14 +273,29 @@ app.get("/friendship-status/:id", (req, res) => {
         );
 });
 
+app.get("/current-friendships/wannabe", (req, res) => {
+    const userId = req.session.userId;
+    friendships
+        .getCurrentFriends(userId)
+        .then(({ rows }) => {
+            res.json({ users: rows });
+        })
+        .catch((err) =>
+            console.log(
+                "🚀 ~ file: server.js ~ /current friendships -  app.get ~ err",
+                err
+            )
+        );
+});
+
 app.post("/friendship-req", (req, res) => {
     const { action, otherUser } = req.body;
     const userId = req.session.userId;
-  
     if (action == BUTTON_TEXT.ACCEPT_REQUEST) {
         friendships
             .friendAccept(userId, otherUser)
             .then(({ rows }) => {
+                // console.log("ROWS IN FRIENDSHOIP",rows);
                 res.json({ rows: rows, userId: userId });
             })
             .catch((err) => console.log("error in friendAccept query", err));

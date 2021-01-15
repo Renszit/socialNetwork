@@ -6,6 +6,7 @@ import Profile from "./profile";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import OtherProfile from "./otherProfile";
 import FindPeople from "./findPeople";
+import Friends from "./friends";
 
 export default class App extends Component {
     constructor() {
@@ -71,6 +72,9 @@ export default class App extends Component {
                         <Link to={"/"}>
                             <p>Profile</p>
                         </Link>
+                        <Link to={"/current-friendships"}>
+                            <p>Friends</p>
+                        </Link>
                         <p onClick={this.logout}>logout</p>
 
                         <div className="profilePicContainer">
@@ -116,6 +120,12 @@ export default class App extends Component {
                                 history={props.history}
                             />
                         )}
+                    />
+
+                    <Route
+                        exact
+                        path="/current-friendships"
+                        render={() => <Friends />}
                     />
 
                     {this.state.uploaderVisible && (

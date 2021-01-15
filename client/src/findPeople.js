@@ -8,7 +8,7 @@ export default function FindPeople() {
     const [results, setResults] = useState([]);
 
     useEffect(() => {
-        let abort;
+        let abort;  
         (async () => {
             if (!person) {
                 const { data } = await axios.get("/users/recent");

@@ -3,14 +3,14 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
-const db = require("./db");
-const { hash, compare } = require("./bc");
 const csurf = require("csurf");
 const cryptoRandomString = require("crypto-random-string");
-const { sendEmail } = require("./ses");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 
+const db = require("./db");
+const { hash, compare } = require("./bc");
+const { sendEmail } = require("./ses");
 const s3 = require("./s3");
 const { s3Url } = require("./config");
 const friendships = require("./friendships");
@@ -22,7 +22,7 @@ const BUTTON_TEXT = {
     UNFRIEND: "Unfriend",
 };
 
-/////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {

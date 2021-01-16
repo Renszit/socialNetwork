@@ -8,7 +8,7 @@ export default function FindPeople() {
     const [results, setResults] = useState([]);
 
     useEffect(() => {
-        let abort;  
+        let abort;
         (async () => {
             if (!person) {
                 const { data } = await axios.get("/users/recent");
@@ -33,12 +33,13 @@ export default function FindPeople() {
     return (
         <div>
             <div className="findPeopleContainer">
-                <h1>find users.</h1>
+                <h1>find.</h1>
                 <input
                     type="text"
                     onChange={(e) => findPerson(e.target.value)}
                     placeholder="type name here"
                 />
+                <img id="lookingGlass" src="./looking_glass.png"></img>
             </div>
             <div className="membersLookupContainer">
                 {!person && <p>Latest members:</p>}

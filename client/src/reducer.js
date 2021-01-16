@@ -33,7 +33,6 @@ export function reducer(state = {}, action) {
             ),
         };
     }
-
-    // we will deal with the actions here...
+    
     return state;
 }

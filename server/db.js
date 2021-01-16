@@ -63,12 +63,12 @@ module.exports.postBio = (bio, userId) => {
 };
 
 module.exports.getRecentThree = () => {
-    const q = `SELECT first,last,id,url FROM users ORDER BY id DESC LIMIT 4`;
+    const q = `SELECT first,last,id,url FROM users ORDER BY id DESC LIMIT 3`;
     return db.query(q);
 };
 
 module.exports.searchForUsers = (val) => {
-    const q = `SELECT first,last,id,url FROM users WHERE first ILIKE ($1) LIMIT 4`;
+    const q = `SELECT first,last,id,url FROM users WHERE first ILIKE ($1) LIMIT 3`;
     const param = [val + "%"];
     return db.query(q, param);
 };

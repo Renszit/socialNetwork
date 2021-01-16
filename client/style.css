@@ -1,11 +1,12 @@
 * {
     font-family: "IBM Plex Mono";
-    color: #272727;
+    color: #0c0f0a;
     margin: 0;
+    text-decoration: none;
 }
 
 body {
-    background-color: #9dbf9e;
+    background-color: #f0e100;
 }
 
 input {
@@ -17,7 +18,7 @@ header {
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
-    background-color: #d5573b;
+    background-color: #cbd2d0;
     justify-content: space-between;
     align-items: center;
     border: 1px black solid;
@@ -96,10 +97,11 @@ header {
 
 .otherProfileContainer {
     display: flex;
-    background-color: #d5573b;
+    background-color: #cbd2d0;
     border-radius: 10px;
     margin: 10px;
     padding: 10px;
+    border: 1px black solid;
 }
 
 .otherTitle {
@@ -129,8 +131,8 @@ header {
     box-shadow: 7px 8px 13px -4px rgba(0, 0, 0, 1);
 }
 
-.bioButton {
-    margin-top: 20px;
+button {
+    margin-top: 10px;
 }
 
 .modalContainer {
@@ -142,7 +144,8 @@ header {
 .profileContainer {
     display: flex;
     border-radius: 10px;
-    background-color: #d5573b;
+    background-color: #cbd2d0;
+    border: 1px black solid;
     margin: 10px;
     padding: 10px;
 }
@@ -154,14 +157,16 @@ header {
 .findPeopleContainer {
     margin: 10px;
     padding: 10px;
-    background-color: #d5573b;
+    border: 1px black solid;
+    background-color: #cbd2d0;
     border-radius: 10px;
 }
 
 .membersLookupContainer {
     margin: 10px;
     padding: 10px;
-    background-color: #d5573b;
+    border: 1px black solid;
+    background-color: #cbd2d0;
     border-radius: 10px;
 }
 
@@ -171,18 +176,18 @@ header {
     margin: 10px;
     border-radius: 10px;
     padding: 10px;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .searchImgContainer {
-    background-color: #f4eea9;
+    background-color: #fffdfd;
     margin: 10px;
     border-radius: 10px;
     padding: 10px;
 }
 
 .searchImgContainer:hover {
-    background-color: #9dbf9e;
+    background-color: #f0e100;
     color: white;
 }
 
@@ -192,4 +197,8 @@ header {
     border-radius: 10px;
     overflow: hidden;
     object-fit: cover;
+}
+
+#lookingGlass {
+    width: 15px;
 }

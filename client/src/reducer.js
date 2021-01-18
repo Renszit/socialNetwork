@@ -32,7 +32,16 @@ export function reducer(state = {}, action) {
                 (declineCheck) => declineCheck.id != action.users
             ),
         };
+    } else if (action.type == "RECENT_MESSAGES") {
+        state = {
+            ...state,
+            messages: action.messages,
+        };
+    } else if (action.type == "NEW_MESSAGE") {
+        state = {
+            ...state,
+            messages: [...state.messages, action.userAndMessage],
+        };
     }
-    
     return state;
 }

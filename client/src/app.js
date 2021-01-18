@@ -7,6 +7,7 @@ import { BrowserRouter, Link, Route } from "react-router-dom";
 import OtherProfile from "./otherProfile";
 import FindPeople from "./findPeople";
 import Friends from "./friends";
+import Chat from "./chat";
 
 export default class App extends Component {
     constructor() {
@@ -72,6 +73,9 @@ export default class App extends Component {
                         <Link to={"/"}>
                             <p>Profile</p>
                         </Link>
+                        <Link to={"/chat"}>
+                            <p>Chat</p>
+                        </Link>
                         <Link to={"/current-friendships"}>
                             <p>Friends</p>
                         </Link>
@@ -110,6 +114,8 @@ export default class App extends Component {
                             />
                         )}
                     />
+
+                    <Route path="/chat" render={() => <Chat />} />
 
                     <Route
                         path="/user/:id"

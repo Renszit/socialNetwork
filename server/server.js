@@ -8,6 +8,13 @@ const cryptoRandomString = require("crypto-random-string");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+});
+
+const dbchat = require("./dbchat");
 const db = require("./db");
 const { hash, compare } = require("./bc");
 const { sendEmail } = require("./ses");
@@ -53,12 +60,18 @@ app.use(
 
 app.use(compression());
 
-app.use(
-    cookieSession({
-        secret: `Kill them with kindness`,
-        maxAge: 1000 * 60 * 60 * 24 * 7 * 6,
-    })
-);
+//cookiesession:
+const cookieSessionMiddleware = cookieSession({
+    secret: `Kill them with kindness`,
+    maxAge: 1000 * 60 * 60 * 24 * 7 * 6,
+});
+
+app.use(cookieSessionMiddleware);
+
+//socket stuff:
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(csurf());
 
@@ -331,6 +344,45 @@ app.get("*", function (req, res) {
     }
 });
 
-app.listen(process.env.PORT || 3001, function () {
+//changed app for server(for socket.io)
+server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
+});
+
+//socket event listener// all (100% of the) server-side socket code will go here
+io.on("connection", (socket) => {
+    console.log(`socket with id ${socket.id} just connected!`);
+    console.log("socket.request.session:", socket.request.session);
+
+    socket.on("my new chat message", (message) => {
+        dbchat
+            .insertNewMessage(socket.request.session.userId, message)
+            .then(({ rows }) => {
+                const messageId = rows.id;
+                const messageTime = rows.timestamp;
+                db.getProfile(socket.request.session.userId)
+                    .then(({ rows }) => {
+                        const { first, last, url } = rows[0];
+                        // console.log("socket message Id, request:, ", rows);
+                        io.sockets.emit("new message and user", {
+                            first: first,
+                            last: last,
+                            message: message,
+                            id: messageId,
+                            url: url,
+                            timestamp: messageTime,
+                        });
+                    })
+                    .catch((err) => {
+                        console.log("error in getprofile", err);
+                    });
+            })
+            .catch((err) => {
+                console.log("error inserting messages", err);
+            });
+    });
+
+    dbchat.getTenMostRecentMessages().then(({ rows }) => {
+        socket.emit("10 most recent messages", rows);
+    });
 });

@@ -46,3 +46,17 @@ export async function unfriend(otherUser) {
         users: otherUser,
     };
 }
+
+export async function addTenMostRecentMessagesToRedux(messages) {
+    return {
+        type: "RECENT_MESSAGES",
+        messages: messages,
+    };
+}
+
+export async function postNewMessage(userAndMessage) {
+    return {
+        type: "NEW_MESSAGE",
+        userAndMessage: userAndMessage,
+    };
+}

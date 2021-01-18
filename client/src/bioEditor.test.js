@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import BioEditor from "./bioEditor.js";
-// import axios from "./axios";
+import axios from "./axios";
 
-// jest.mock("axios");
+jest.mock("axios");
 
 test("when there is no bio, add bio button is shown", () => {
     const { container } = render(<BioEditor textareaVisible="false" />);
@@ -13,6 +13,7 @@ test("when there is a bio, edit bio button is shown", () => {
     const { container } = render(<BioEditor textareaVisible="false" bio="true" />);
     expect(container.querySelector("button").innerHTML).toContain("Edit bio");
 });
+
 
 // test("Clicking add or edit causes text area and a save button to be rendered", () => {
 //     const { container } = render(

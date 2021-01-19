@@ -240,7 +240,6 @@ button {
     padding: 5px;
     display: flex;
     border-radius: 10px;
-    /* border: 1px black solid; */
 }
 
 .chatBox {

@@ -29,9 +29,9 @@ export default function Chat() {
                 {chatMessages &&
                     chatMessages.map((message, idx) => (
                         <div className="chatNode" key={idx}>
-                            <img className="chatImg" src={message.url}></img>
+                            <Link to={`/user/${message.user_id}`} > <img className="chatImg" src={message.url}></img> </Link>
                             <p>
-                                <strong>{message.first} </strong>:{" "}
+                                <strong>{message.first}</strong>:{" "}
                                 {message.message}
                             </p>
                         </div>

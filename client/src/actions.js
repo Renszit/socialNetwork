@@ -60,3 +60,10 @@ export async function postNewMessage(userAndMessage) {
         userAndMessage: userAndMessage,
     };
 }
+
+export async function renewLoggedInUsers(users) {
+    return {
+        type: "LOGGED_IN_USERS",
+        online: users,
+    };
+}

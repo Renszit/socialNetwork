@@ -4,12 +4,13 @@ var db = spicedPg(
 );
 
 module.exports.getTenMostRecentMessages = () => {
-    const q = `SELECT chat_messages.user_id, chat_messages.message, chat_messages.timestamp, users.url, users.first, users.last 
+    const q = `(SELECT chat_messages.user_id, chat_messages.message, chat_messages.timestamp, users.url, users.first, users.last 
     FROM chat_messages 
     JOIN users 
-    ON chat_messages.user_id = users.id 
+    ON chat_messages.user_id = users.id
+    LIMIT 10 ) 
     ORDER BY chat_messages.timestamp DESC
-    LIMIT 10 `;
+    `;
     return db.query(q);
 };
 

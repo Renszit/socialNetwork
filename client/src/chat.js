@@ -3,6 +3,7 @@ import { socket } from "./socket";
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 // import { useRef } from "react";
+// import OnlineUsers from "./onlineUsers";
 
 export default function Chat() {
     const elemRef = useRef();
@@ -11,7 +12,6 @@ export default function Chat() {
 
     useEffect(() => {
         elemRef.current.scrollTop += 200;
-        // console.log("useEffect Runs", elemRef.current.scrollTop);
     }, [chatMessages]);
 
     const handleKeyDown = (e) => {
@@ -29,7 +29,12 @@ export default function Chat() {
                 {chatMessages &&
                     chatMessages.map((message, idx) => (
                         <div className="chatNode" key={idx}>
-                            <Link to={`/user/${message.user_id}`} > <img className="chatImg" src={message.url}></img> </Link>
+                            <Link to={`/user/${message.user_id}`}>
+                                <img
+                                    className="chatImg"
+                                    src={message.url}
+                                ></img>
+                            </Link>
                             <p>
                                 <strong>{message.first}</strong>:{" "}
                                 {message.message}
@@ -38,6 +43,7 @@ export default function Chat() {
                     ))}
             </div>
             <textarea className="chatBox" onKeyDown={handleKeyDown} />
+           
         </div>
     );
 }

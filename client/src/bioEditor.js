@@ -12,12 +12,14 @@ export default class BioEditor extends Component {
     }
 
     handleChange(e) {
-        this.setState(
-            {
-                [e.target.name]: e.target.value,
-            },
-            () => console.log("this.state in handleChange:", this.state)
-        );
+        if (e.target.value) {
+            this.setState(
+                {
+                    [e.target.name]: e.target.value,
+                },
+                () => console.log("this.state in handleChange:", this.state)
+            );
+        }
     }
 
     toggleText() {

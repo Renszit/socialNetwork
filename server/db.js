@@ -73,4 +73,8 @@ module.exports.searchForUsers = (val) => {
     return db.query(q, param);
 };
 
-
+module.exports.getOnlineUsers = (arrayOfIds) => {
+    const q = `SELECT id, first, last, url FROM users WHERE id = ANY($1)`;
+    const params = [arrayOfIds];
+    return db.query(q, params);
+};

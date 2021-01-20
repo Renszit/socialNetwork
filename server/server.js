@@ -349,10 +349,48 @@ server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
+let onlineUsers = {};
+let arr;
 //socket event listener// all (100% of the) server-side socket code will go here
 io.on("connection", (socket) => {
     console.log(`socket with id ${socket.id} just connected!`);
-    console.log("socket.request.session:", socket.request.session);
+    // const userId = socket.request.session.userId;
+
+    // if (!userId) {
+    //     return socket.disconnect(true);
+    // }
+    // // console.log("userId: ", userId);
+    // if (Object.values(onlineUsers) != userId) {
+    //     onlineUsers[socket.id] = userId;
+    //     arr = Object.values(onlineUsers);
+    // }
+    // console.log("onlineusers variable: ", onlineUsers);
+    // console.log("onlineusers array:", arr);
+    // //
+    // db.getOnlineUsers(arr)
+    //     .then(({ rows }) => {
+    //         socket.emit("update online users", rows);
+    //     })
+    //     .catch((err) => console.log("error in getting online users;", err));
+
+    // socket.broadcast.emit("userJoined", () => {
+    //     return arr;
+    // });
+    //
+    // socket.on("disconnect", () => {
+    //     delete onlineUsers[socket.id];
+    //     return db
+    //         .getOnlineUsers(arr)
+    //         .then(({ rows }) => {
+    //             socket.emit("update online users", rows);
+    //         })
+    //         .catch((err) =>
+    //             console.log(
+    //                 "error in getting onlne users within disconnect;",
+    //                 err
+    //             )
+    //         );
+    // });
 
     socket.on("my new chat message", (message) => {
         dbchat

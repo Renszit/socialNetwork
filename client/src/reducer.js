@@ -42,6 +42,11 @@ export function reducer(state = {}, action) {
             ...state,
             messages: [...state.messages, action.userAndMessage],
         };
+    } else if (action.type == "LOGGED_IN_USERS") {
+        state = {
+            ...state,
+            online: action.online,
+        };
     }
     return state;
 }
